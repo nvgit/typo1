@@ -139,7 +139,16 @@ class Admin::ContentController < Admin::BaseController
 
   def real_action_for(action); { 'add' => :<<, 'remove' => :delete}[action]; end
 
+  def merge
+    @article = params[:article]
+    @merge_id = params[:merge_id]
+    debugger
+  end
+
   def new_or_edit
+    if params[:commit] == 'Merge'
+      merge
+    end
     id = params[:id]
     id = params[:article][:id] if params[:article] && params[:article][:id]
     @article = Article.get_or_build_article(id)
